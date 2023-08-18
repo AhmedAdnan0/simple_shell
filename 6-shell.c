@@ -1,9 +1,4 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <string.h>
-#include <stdlib.h>
-#include <sys/wait.h>
-#include <sys/stat.h>
+#include "func.h"
 
 /**
  * creat_vec - ctreates an array of strings form a string
@@ -20,7 +15,7 @@ char **creat_vec(char *cmd, char *delim)
 	char *token, *cmd_cpy;
 	char **vec;
 
-	cmd_cpy = strdup(cmd);
+	cmd_cpy = _strdup(cmd);
 
 	token = strtok(cmd, delim);
 	while (token)
@@ -59,7 +54,7 @@ char **path_dir(char *path, unsigned int *p_count)
 	char *p, *path_cpy, **dir;
 	unsigned int n = 0, i = 0;
 
-	path_cpy = strdup(path);
+	path_cpy = _strdup(path);
 
 	p = strtok(path, ":");
 	while (p)
@@ -72,16 +67,13 @@ char **path_dir(char *path, unsigned int *p_count)
 
 	dir = malloc(n * sizeof(char *));
 	if (dir == NULL)
-	{
-		printf("Error: creating PTAH directories array\n");
 		exit(-1);
-	}
 
 	p = strtok(path_cpy, ":");
 	for (; i < n; ++i)
 	{
-		dir[i] = strdup(p);
-		strcat(dir[i], "/");
+		dir[i] = _strdup(p);
+		_strcat(dir[i], "/");
 		p = strtok(NULL, ":");
 	}
 	return (dir);
@@ -107,8 +99,8 @@ void path(char **vec, char **dir, unsigned int n)
 
 	for (i = 0; i < n; ++i)
 	{
-		path = strdup(dir[i]);
-		strcat(path, vec[0]);
+		path = _strdup(dir[i]);
+		_strcat(path, vec[0]);
 
 		if (stat(path, &st) == 0)
 		{
@@ -136,22 +128,24 @@ int main(int argc, char **argv, char **env)
 	size_t n = 0;
 	struct stat st;
 
-	setenv("TERM", "xterm", 1);
 	if (argc != 1)
 		return (-1);
 	dir = path_dir(getenv("PATH"), &p_count);
 	while (1)
 	{
-		printf("#cisfun$ ");
+		print_str("#cisfun$ ");
 		getline(&cmd, &n, stdin);
 		vec = creat_vec(cmd, " \n");
 		if (vec == NULL)
 			return (-1);
-		if (strcmp(vec[0], "exit") == 0)
+		if (_strcmp(vec[0], "exit") == 0)
 			break;
-		else if (strcmp(vec[0], "env") == 0)
+		else if (_strcmp(vec[0], "env") == 0)
 			for (int i = 0; env[i]; ++i)
-				printf("%s\n", env[i]);
+			{
+				print_str(env[i]);
+				print_str("\n");
+			}
 		path(vec, dir, p_count);
 		if (stat(vec[0], &st) == 0)
 		{
@@ -164,7 +158,10 @@ int main(int argc, char **argv, char **env)
 				wait(NULL);
 		}
 		else
-			printf("%s: No such file or directory\n", argv[0]);
+		{
+			print_str(argv[0]);
+			print_str(": No such file or directory\n");
+		}
 		free(vec);
 	}
 	return (0);
