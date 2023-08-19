@@ -16,7 +16,6 @@ int _putchar(char c)
 /**
  * print_str - print a char string
  * @str: string to be printed
- * @n: str length
  */
 
 void print_str(char *str)
@@ -48,4 +47,43 @@ void print_int(int x)
 		print_int(y / 10);
 
 	_putchar('0' + y % 10);
+}
+
+/**
+ * print_env - prints environment
+ * @env: environment
+ */
+
+void print_env(char **env)
+{
+	int i;
+
+	if (env == NULL)
+		return;
+
+	for (i = 0; env[i]; ++i)
+	{
+		print_str(env[i]);
+		_putchar('\n');
+	}
+}
+
+/**
+ * print_err - prints error message
+ * @sh: program name
+ * @cmd: command
+ * @is_tty: interactive mode or not
+ */
+
+void print_err(char *sh, char *cmd, int is_tty)
+{
+	print_str(sh);
+	if (is_tty)
+		print_str(": No such file or directory\n");
+	else
+	{
+		print_str(": 1: ");
+		print_str(cmd);
+		print_str(": not found\n");
+	}
 }

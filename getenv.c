@@ -3,7 +3,7 @@
 /**
  * _getenv - gets variable value from environ
  * @var: varuable
- * @env - environment
+ * @env: environment
  *
  * Return: variable value
  */

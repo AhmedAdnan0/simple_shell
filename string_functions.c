@@ -34,7 +34,9 @@ char *_strcat(char *dest, char *src)
 {
 	int i, j;
 
-	for (j = 0; dest[j] != '\0'; ++j);
+	for (j = 0; dest[j] != '\0'; ++j)
+	{
+	}
 	for (i = 0; src[i] != '\0'; ++i)
 		*(dest + j + i) = *(src + i);
 	*(dest + j + i) = '\0';
@@ -54,8 +56,9 @@ char *_strdup(char *str)
 	int i;
 	char *new_str;
 
-	for (i = 0; str[i] != '\0'; ++i);
-
+	for (i = 0; str[i] != '\0'; ++i)
+	{
+	}
 	new_str = malloc(i * sizeof(char));
 	if (new_str == NULL)
 		return (NULL);
@@ -65,4 +68,22 @@ char *_strdup(char *str)
 	new_str[i] = '\0';
 
 	return (new_str);
+}
+
+/**
+ * getcmd - get command line
+ *
+ * Return: cmd line
+ */
+
+char *getcmd(void)
+{
+	char buffer[1024];
+	int r;
+
+	r = read(STDIN_FILENO, buffer, sizeof(buffer));
+	if (r == -1)
+		return (NULL);
+
+	return (_strdup(buffer));
 }
