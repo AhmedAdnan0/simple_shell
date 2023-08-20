@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+char *_getline(FILE *f, int maxchar)
+{
+    char *string = malloc(maxchar+1);
+    int c;
+    int i = 0;
+
+    while ((c = fgetc(f)) != EOF && c != '\n' && i < maxchar){
+        *(string + i++) = c;
+    }
+    *(string + i) = '\0';
+    return string;
+}
+
+int main()
+{
+	char *x;
+
+	x = get_line(stdin, 1024);
+
+	printf("%s\n", x);
+	return (0);
+}

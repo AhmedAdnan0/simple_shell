@@ -67,23 +67,3 @@ void print_env(char **env)
 		_putchar('\n');
 	}
 }
-
-/**
- * print_err - prints error message
- * @sh: program name
- * @cmd: command
- * @is_tty: interactive mode or not
- */
-
-void print_err(char *sh, char *cmd, int is_tty)
-{
-	print_str(sh);
-	if (is_tty)
-		print_str(": No such file or directory\n");
-	else
-	{
-		print_str(": 1: ");
-		print_str(cmd);
-		print_str(": not found\n");
-	}
-}

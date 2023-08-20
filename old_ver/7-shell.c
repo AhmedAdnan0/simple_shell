@@ -123,29 +123,33 @@ void path(char **vec, char **dir, unsigned int n)
 int main(int argc, char **argv, char **env)
 {
 	char **vec, **dir, *cmd = NULL;
+	int child;
 	unsigned int p_count = 0;
-	int counter = 0, child, is_tty;
+	int i;
 	struct stat st;
-	size_t n = 0;
+	int is_tty = isatty(STDIN_FILENO);
 
-	is_tty = isatty(STDIN_FILENO);
 	if (argc != 1)
 		return (-1);
 	dir = path_dir(getenv("PATH"), &p_count);
 	while (1)
 	{
 here:
-		counter++;
 		if (is_tty)
 			print_str("#cisfun$ ");
-/*		cmd = getcmd();	*/
-		getline(&cmd, &n, stdin);
+		cmd = getcmd();
 		vec = creat_vec(cmd, " \n");
+		if (vec == NULL)
+			return (-1);
 		if (_strcmp(vec[0], "exit") == 0)
 			break;
 		else if (_strcmp(vec[0], "env") == 0)
 		{
-			print_env(env);
+			for (i = 0; env[i]; ++i)
+			{
+				print_str(env[i]);
+				print_str("\n");
+			}
 			goto here;
 		}
 		path(vec, dir, p_count);
@@ -160,7 +164,17 @@ here:
 				wait(NULL);
 		}
 		else
-			print_err(argv[0], vec[0], counter, 1);
+		{
+			print_str(argv[0]);
+			if (is_tty)
+				print_str(": No such file or directory\n");
+			else
+			{
+				print_str(": 1: :");
+				print_str(vec[0]);
+				print_str(" not found\n");
+			}
+		}
 		free(vec);
 		if (is_tty == 0)
 			break;
