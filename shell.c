@@ -85,29 +85,27 @@ char **path_dir(char *path, unsigned int *p_count)
  * @dir: path directories
  * @n: no of path directories
  *
- * Return: nothing
+ * Return: command path
  */
 
-void path(char **vec, char **dir, unsigned int n)
+char *path(char *vec, char **dir, unsigned int n)
 {
 	char *path;
 	unsigned int i;
 	struct stat st;
 
-	if (stat(vec[0], &st) == 0)
-		return;
+	if (stat(vec, &st) == 0)
+		return (_strdup(vec));
 
 	for (i = 0; i < n; ++i)
 	{
 		path = _strdup(dir[i]);
-		_strcat(path, vec[0]);
+		_strcat(path, vec);
 
 		if (stat(path, &st) == 0)
-		{
-			vec[0] = path;
-			return;
-		}
+			return (path);
 	}
+	return (_strdup(vec));
 }
 
 /**
@@ -122,7 +120,7 @@ void path(char **vec, char **dir, unsigned int n)
 
 int main(int argc, char **argv, char **env)
 {
-	char **vec, **dir, *cmd = NULL;
+	char **vec, **dir, *cmd_path, *cmd = NULL;
 	unsigned int p_count = 0;
 	int counter = 0, child, is_tty;
 	struct stat st;
@@ -148,14 +146,14 @@ here:
 			print_env(env);
 			goto here;
 		}
-		path(vec, dir, p_count);
-		if (stat(vec[0], &st) == 0)
+		cmd_path = path(vec[0], dir, p_count);
+		if (stat(cmd_path, &st) == 0)
 		{
 			child = fork();
 			if (child == -1)
 				return (-1);
 			if (child == 0)
-				execve(vec[0], vec, env);
+				execve(cmd_path, vec, env);
 			else
 				wait(NULL);
 		}
