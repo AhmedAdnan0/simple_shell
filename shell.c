@@ -109,6 +109,26 @@ char *path(char *vec, char **dir, unsigned int n)
 }
 
 /**
+ * comment_handler - handling comments
+ * @s: command
+ */
+
+void comment_handler(char **str)
+{
+	int i;
+	char *s = *str;
+
+	for (i = 0; s[i]; ++i)
+		if (s[i] == '#' && (i == 0 || s[i - 1] == ' ' ||
+			s[i - 1] == '\n' || s[i - 1] == '\t'))
+			break;
+
+	if (s[i] == '#')
+		for (; s[i]; ++i)
+			s[i] = '\0';
+}	
+
+/**
  * main - command line interpreter
  * @argc: aruments count
  * @argv: arguments value
@@ -137,6 +157,7 @@ here:
 		if (is_tty)
 			print_str("#cisfun$ ");
 		getline(&cmd, &n, stdin);
+		comment_handler(&cmd);
 		vec = creat_vec(cmd, " \n\t");
 		if (_strcmp(vec[0], "exit") == 0)
 			break;
