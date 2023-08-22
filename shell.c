@@ -136,9 +136,8 @@ here:
 		counter++;
 		if (is_tty)
 			print_str("#cisfun$ ");
-/*		cmd = getcmd();	*/
 		getline(&cmd, &n, stdin);
-		vec = creat_vec(cmd, " \n");
+		vec = creat_vec(cmd, " \n\t");
 		if (_strcmp(vec[0], "exit") == 0)
 			break;
 		else if (_strcmp(vec[0], "env") == 0)
@@ -164,7 +163,16 @@ here:
 			break;
 	}
 	if (vec[1])
+	{
 		exit_status = _atoi(vec[1]);
+		if (exit_status < 0)
+		{
+			print_err(argv[0], vec[0], counter, 2);
+			print_str_err(vec[1]);
+			print_str_err("\n");
+			goto here;
+		}
+	}
 	free(vec);
 	exit(exit_status);
 }
