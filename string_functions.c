@@ -90,24 +90,24 @@ char *_memset(char *str, char c, unsigned int n)
 }
 
 /*
- * _atoi - converts str to no
- * @no: string to be converted
+ * _atoi - converts str to string
+ * @str: string to be converted
  *
  * Return: number
  */
 
-int _atoi(char* str)
+int _atoi(char *str)
 {
-    int i = 0, res = 0, sign = 1;
- 
-    if (str[0] == '-')
+	int i = 0, res = 0, sign = 1;
+
+	if (str[0] == '-')
 	{
-        sign = -1;
-        i++;
-    }
- 
-    for (; str[i] != '\0'; i++)
-        res = res * 10 + str[i] - '0';
- 
-    return (sign * res);
+		sign = -1;
+		i++;
+	}
+
+	for (; str[i] != '\0'; i++)
+		res = res * 10 + str[i] - '0';
+
+	return (sign * res);
 }
