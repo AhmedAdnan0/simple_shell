@@ -71,19 +71,43 @@ char *_strdup(char *str)
 }
 
 /**
- * getcmd - get command line
+ * _memset - fills the first n bytes of the memory area
+ * @str: string
+ * @c: filler
+ * @n: size
  *
- * Return: cmd line
+ * Return: str
  */
 
-char *getcmd(void)
+char *_memset(char *str, char c, unsigned int n)
 {
-	char buffer[1024];
-	int r;
+	unsigned int i;
 
-	r = read(STDIN_FILENO, buffer, sizeof(buffer));
-	if (r == -1)
-		return (NULL);
+	for (i = 0; i < n; ++i)
+		str[i] = c;
 
-	return (_strdup(buffer));
+	return (str);
+}
+
+/*
+ * _atoi - converts str to no
+ * @no: string to be converted
+ *
+ * Return: number
+ */
+
+int _atoi(char* str)
+{
+    int i = 0, res = 0, sign = 1;
+ 
+    if (str[0] == '-')
+	{
+        sign = -1;
+        i++;
+    }
+ 
+    for (; str[i] != '\0'; i++)
+        res = res * 10 + str[i] - '0';
+ 
+    return (sign * res);
 }

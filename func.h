@@ -24,13 +24,19 @@ void print_err(char *sh, char *cmd, int counter, int errno);
 int _strcmp(char *s1, char *s2);
 char *_strcat(char *dest, char *src);
 char *_strdup(char *str);
-char *getcmd(void);		/* Not worhing yet */
+char *_memset(char *str, char c, unsigned int n);
+int _atoi(char *str);
+
+/* mem-functions.c */
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+
+/* getenv.c */
+char *_getenv(const char *var, char **env);
 
 /* strtok.c */			/* Not working yet */
 int check_delim(char c, char *delim);
 char *_strtok(char *ptr, char *delim);
 
-/* getenv.c */
-char *_getenv(const char *var, char **env);
+/* getline.c */
 
 #endif /* _FUNC_H_ */
