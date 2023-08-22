@@ -98,7 +98,8 @@ char *_memset(char *str, char c, unsigned int n)
 
 int _atoi(char *str)
 {
-	int i = 0, res = 0, sign = 1;
+	int i = 0, sign = 1, n;
+	long int res = 0;
 
 	if (str[0] == '-')
 	{
@@ -106,8 +107,16 @@ int _atoi(char *str)
 		i++;
 	}
 
+	for (n = i; str[n] != '\0'; ++n)
+		if (str[n] < '0' || str[n] > '9')
+			return (-1);
+
 	for (; str[i] != '\0'; i++)
+	{
 		res = res * 10 + str[i] - '0';
+		if (res > INT_MAX)
+			return (-1);
+	}
 
 	return (sign * res);
 }

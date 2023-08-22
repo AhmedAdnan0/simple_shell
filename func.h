@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
 
@@ -27,6 +28,9 @@ char *_strdup(char *str);
 char *_memset(char *str, char c, unsigned int n);
 int _atoi(char *str);
 
+/* string2_functions.c */
+int _strlen(char *s);
+
 /* mem-functions.c */
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 
@@ -35,8 +39,12 @@ char *_getenv(const char *var, char **env);
 
 /* strtok.c */			/* Not working yet */
 int check_delim(char c, char *delim);
-char *_strtok(char *ptr, char *delim);
 
 /* getline.c */
+
+/* helper.c */
+char *_strtok(char *ptr, char *delim);
+void comment_handler(char **str);
+void echo(char **arg);
 
 #endif /* _FUNC_H_ */

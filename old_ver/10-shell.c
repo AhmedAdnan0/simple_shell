@@ -137,18 +137,12 @@ here:
 		if (is_tty)
 			print_str("#cisfun$ ");
 		getline(&cmd, &n, stdin);
-		comment_handler(&cmd);
 		vec = creat_vec(cmd, " \n\t");
 		if (_strcmp(vec[0], "exit") == 0)
 			break;
 		else if (_strcmp(vec[0], "env") == 0)
 		{
 			print_env(env);
-			goto here;
-		}
-		else if (_strcmp(vec[0], "echo") == 0)
-		{
-			echo(vec);
 			goto here;
 		}
 		cmd_path = path(vec[0], dir, p_count);

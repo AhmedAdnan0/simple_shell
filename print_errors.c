@@ -59,15 +59,19 @@ void print_int_err(int x)
 
 void print_err(char *sh, char *cmd, int counter, int errno)
 {
+	print_str_err(sh);
+	print_str_err(": ");
+	print_int_err(counter);
+	print_str_err(": ");
+	print_str_err(cmd);
+
 	switch (errno)
 	{
 		case 1:			/* command not found */
-			print_str_err(sh);
-			print_str_err(": ");
-			print_int_err(counter);
-			print_str_err(": ");
-			print_str_err(cmd);
 			print_str_err(": not found\n");
+			break;
+		case 2:			/* illegal exit arg */
+			print_str_err(": Illegal number ");
 			break;
 	}
 }

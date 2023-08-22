@@ -109,6 +109,26 @@ char *path(char *vec, char **dir, unsigned int n)
 }
 
 /**
+ * comment_handler - handling comments
+ * @s: command
+ */
+
+void comment_handler(char **str)
+{
+	int i;
+	char *s = *str;
+
+	for (i = 0; s[i]; ++i)
+		if (s[i] == '#' && (i == 0 || s[i - 1] == ' ' ||
+			s[i - 1] == '\n' || s[i - 1] == '\t'))
+			break;
+
+	if (s[i] == '#')
+		for (; s[i]; ++i)
+			s[i] = '\0';
+}	
+
+/**
  * main - command line interpreter
  * @argc: aruments count
  * @argv: arguments value
@@ -144,11 +164,6 @@ here:
 		else if (_strcmp(vec[0], "env") == 0)
 		{
 			print_env(env);
-			goto here;
-		}
-		else if (_strcmp(vec[0], "echo") == 0)
-		{
-			echo(vec);
 			goto here;
 		}
 		cmd_path = path(vec[0], dir, p_count);
