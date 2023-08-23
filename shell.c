@@ -24,7 +24,7 @@ char **creat_vec(char *cmd, char *delim)
 		++i;
 	}
 
-	vec = malloc(i * sizeof(char *));
+	vec = malloc(i * 4);
 	if (vec == NULL)
 		return (NULL);
 
@@ -65,7 +65,7 @@ char **path_dir(char *path, unsigned int *p_count)
 
 	*p_count = n;
 
-	dir = malloc(n * sizeof(char *));
+	dir = malloc(n * 4);
 	if (dir == NULL)
 		exit(-1);
 
@@ -129,7 +129,7 @@ int main(int argc, char **argv, char **env)
 	is_tty = isatty(STDIN_FILENO);
 	if (argc != 1)
 		return (-1);
-	dir = path_dir(getenv("PATH"), &p_count);
+	dir = path_dir(_getenv("PATH", env), &p_count);
 	while (1)
 	{
 here:
