@@ -89,7 +89,7 @@ char *_memset(char *str, char c, unsigned int n)
 	return (str);
 }
 
-/*
+/**
  * _atoi - converts str to string
  * @str: string to be converted
  *

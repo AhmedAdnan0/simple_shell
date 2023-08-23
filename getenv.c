@@ -15,7 +15,7 @@ char *_getenv(const char *var, char **env)
 
 	while (env[i])
 	{
-  env_cpy = _strdup(env[i]);
+		env_cpy = _strdup(env[i]);
 		token = strtok(env_cpy, "=");
 
 		if (_strcmp((char *)var, token) == 0)
@@ -24,7 +24,7 @@ char *_getenv(const char *var, char **env)
 			return (token);
 		}
 		++i;
-free(env_cpy);
+		free(env_cpy);
 	}
 	return (NULL);
 }
