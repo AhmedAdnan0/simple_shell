@@ -164,11 +164,10 @@ here:
 		}
 		else
 			print_err(argv[0], vec[0], counter, 1);
-		free(vec);
 		if (is_tty == 0)
 			break;
 	}
-	if (vec[1])
+	if (_strcmp(vec[0], "exit") == 0 && vec[1])
 	{
 		exit_status = _atoi(vec[1]);
 		if (exit_status < 0)
