@@ -118,14 +118,16 @@ char *path(char *vec, char **dir, unsigned int n)
  *        -1 --> FAILED
  */
 
-int main(int argc, char **argv, char **env)
+int main(int argc, char **argv)
 {
-	char **vec, **dir, *cmd_path, *cmd = NULL;
+	char **vec, **dir, *cmd_path, *cmd = NULL, **env;
+	extern char **environ;
 	unsigned int p_count = 0;
 	int counter = 0, child, is_tty, exit_status = 0;
 	struct stat st;
 	size_t n = 0;
 
+	env = environ;
 	is_tty = isatty(STDIN_FILENO);
 	if (argc != 1)
 		return (-1);
