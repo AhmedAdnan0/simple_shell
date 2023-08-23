@@ -59,7 +59,7 @@ char *_strdup(char *str)
 	for (i = 0; str[i] != '\0'; ++i)
 	{
 	}
-	new_str = malloc(i * sizeof(char));
+	new_str = malloc(i);
 	if (new_str == NULL)
 		return (NULL);
 
